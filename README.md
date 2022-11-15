@@ -152,3 +152,4 @@ Run the following console command to create admin user. PASSWORD is optional, yo
 ```bash
 php yii app/create-admin-user USERNAME [PASSWORD]
 ```
+# e-commerce-yii2
