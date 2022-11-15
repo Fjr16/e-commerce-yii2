@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Bootstrap DatePicker</title>
+
+    <!-- Include file bootstrap.min.css -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Include library Font Awesome -->
+    <link href="libraries/fontawesome/css/all.min.css" rel="stylesheet">
+
+    <!-- Include library Datepicker Gijgo -->
+    <link href="libraries/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet">
+</head>
+<body>
+    <div style="padding: 10px 30px;">
+        <h1>DatePicker for Bootstrap 4</h1>
+        <hr />
+
+        <div class="row">
+            <div class="col-2">
+                <div class="form-group">
+                    <label>Tanggal (DatePicker)</label>
+                    <input type="text" id="datepicker" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#datepicker" autocomplete="off" />
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group">
+                    <label>Periode Tanggal (DateRangePicker)</label>
+
+                    <div class="input-group">
+                        <input type="text" id="startdate" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#startdate" autocomplete="off" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">s/d</span>
+                        </div>
+                        <input type="text" id="enddate" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#enddate" autocomplete="off" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-group">
+                    <label>Bulan (MonthPicker)</label>
+                    <input type="text" id="monthpicker" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#monthpicker" autocomplete="off" />
+                </div>
+            </div>
+            <div class="col-2">
+                <div class="form-group">
+                    <label>Tahun (YearPicker)</label>
+                    <input type="text" id="yearpicker" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#yearpicker" autocomplete="off" />
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group">
+                    <label>Periode Tahun (YearRangePicker)</label>
+
+                    <div class="input-group">
+                        <input type="text" id="startyear" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#startyear" autocomplete="off" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">s/d</span>
+                        </div>
+                        <input type="text" id="endyear" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#endyear" autocomplete="off" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include file jquery.min.js -->
+    <script src="js/jquery.min.js"></script>
+
+    <!-- Include file boootstrap.min.js -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Include library Moment JS -->
+    <script src="libraries/moment/moment.min.js"></script>
+
+    <!-- Include library Datepicker Gijgo -->
+    <script src="libraries/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Include file custom.js -->
+    <script src="js/custom.js"></script>
+
+    <script>
+    $(document).ready(function(){
+        setDatePicker("#datepicker")
+        setDateRangePicker("#startdate", "#enddate")
+        setMonthPicker("#monthpicker")
+        setYearPicker("#yearpicker")
+        setYearRangePicker("#startyear", "#endyear")
+    })
+    </script>
+</body>
+</html>

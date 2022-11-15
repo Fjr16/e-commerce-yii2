@@ -13,15 +13,18 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use common\models\User;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\ContactForm;
+use common\models\CartItem;
+use backend\models\KategoriProduk;
 
 /**
  * Site controller
  */
-class SiteController extends \frontend\base\Controller
+class SiteController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -78,10 +81,23 @@ class SiteController extends \frontend\base\Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
+            // 'query' => Product::find()->baju(),
             'query' => Product::find()->published(),
         ]);
+        // $dataProvider2 = new ActiveDataProvider([
+        //     'query' => Product::find()->getKategori(),
+        // ]);
+       // $tipekategori = KategoriProduk::find()->getKategori();
+        // echo '<pre>';
+        // print_r($dataProvider2);
+        // die();
+
+
+        // $kategori = KategoriProduk::find()->all();
         return $this->render('index', [
-            'dataProvider' => $dataProvider
+            'dataProvider' => $dataProvider,
+            // 'dataProvider2' => $dataProvider2,
+            // 'kategori' => $kategori
         ]);
     }
 
@@ -127,16 +143,33 @@ class SiteController extends \frontend\base\Controller
      */
     public function actionSignup()
     {
+        // $model = new SignupForm();
+        // if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+        //     Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+        //     return $this->goHome();
+        // }
         $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
-            return $this->goHome();
+        if ($model->load(Yii::$app->request->post())) {
+            $model->level = 'Costumer';
+            if ($user = $model->signup()) {
+                if($model->level = "Costumer"){
+                    $Costumer = new \backend\models\Costumer();
+                    $Costumer->id_user = $user->id;
+                    $Costumer->nama = $user->username;
+                    $Costumer->telp = null;
+                    $Costumer->alamat = null;
+                    $Costumer->save();
+                }
+                $user = User::findOne(['username' => $model->username]);
+                Yii::$app->session->setFlash('Anda Telah Berhasil Mendaftar');
+                return $this->goHome();
+            }
         }
-
         return $this->render('signup', [
             'model' => $model,
         ]);
     }
+    
 
     /**
      * Requests password reset.
@@ -231,5 +264,12 @@ class SiteController extends \frontend\base\Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+    public function beforeAction($action)
+    {
+
+        $this->view->params['cartItemCount'] = CartItem::getTotalQuantityForUser(currUserId());
+        return parent::beforeAction($action);
     }
 }

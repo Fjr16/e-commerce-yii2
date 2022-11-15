@@ -2,6 +2,9 @@
 
 namespace common\models\query;
 
+use backend\models\KategoriProduk;
+use yii\helpers\ArrayHelper;
+
 /**
  * This is the ActiveQuery class for [[\common\models\Product]].
  *
@@ -38,6 +41,12 @@ class ProductQuery extends \yii\db\ActiveQuery
     public function published()
     {
         return $this->andWhere(['status' => 1]);
+    }
+
+    public function baju()
+    {
+        return $this->andWhere(['id' => 17]);
+
     }
 
     public function id($id)

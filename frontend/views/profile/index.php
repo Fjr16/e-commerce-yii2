@@ -15,7 +15,7 @@
     <div class="col">
         <div class="card">
             <div class="card-header">
-                Address information
+                Informasi Alamat
             </div>
             <div class="card-body">
 
@@ -23,7 +23,8 @@
                     'enablePushState' => false
                 ]) ?>
                 <?php echo $this->render('user_address', [
-                    'userAddress' => $userAddress
+                    'userAddress' => $userAddress,
+                    'pro'=>$pro,
                 ]) ?>
                 <?php \yii\widgets\Pjax::end() ?>
             </div>
@@ -32,7 +33,7 @@
     <div class="col">
         <div class="card">
             <div class="card-header">
-                Account information
+                Informasi Akun
             </div>
             <div class="card-body">
                 <?php \yii\widgets\Pjax::begin([

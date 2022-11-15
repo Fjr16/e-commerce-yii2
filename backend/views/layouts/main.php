@@ -6,6 +6,7 @@
 
 use backend\assets\AppAsset;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -17,7 +18,7 @@ AppAsset::register($this);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title>Atlanta Sport</title>
     <?php $this->head() ?>
 </head>
 <body id="page-top">
@@ -31,43 +32,163 @@ AppAsset::register($this);
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="">
             <!--            <div class="sidebar-brand-icon rotate-n-15">-->
             <!--                <i class="fas fa-laugh-wink"></i>-->
             <!--            </div>-->
-            <div class="sidebar-brand-text mx-3">Yii2 E-commerce</div>
+            <div class="sidebar-brand-text mx-3">Atlanta Sport</div>
         </a>
 
         <!-- Divider -->
         <hr class="sidebar-divider my-0">
 
-        <!-- Nav Item - Dashboard -->
-        <li class="nav-item active">
-            <a class="nav-link" href="<?php echo Yii::$app->homeUrl ?>">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></a>
-        </li>
+        
 
 
         <!-- Divider -->
         <hr class="sidebar-divider">
 
+        <!-- ADMIN BEGIN-->
+        <?php if(Yii::$app->user->identity->level == 'Admin') :?>
 
-        <!-- Nav Item - Charts -->
+            <li class="nav-item">
+            <a class="nav-link" href="<?php echo Yii::$app->homeUrl ?>">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+            </li>
+
+            <li class="nav-item">
+            <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/product/index']) ?>">
+                <i class="fas fa-fw fa-list"></i>
+                <span>Produk</span>
+            </a>
+            </li>
+
+            <li class="nav-item">
+            <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/kategori-produk/index']) ?>">
+                <i class="fas fa-fw fa-list"></i>
+                <span>Kategori Produk</span>
+            </a>
+            </li>
+
+            <li class="nav-item">
+            <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/order/index']) ?>">
+                <i class="fas fa-money-check-alt"></i>
+                <span>Daftar Pesanan</span>
+            </a>
+            </li>
+
+            <li class="nav-item">
+            <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/ongkir/index']) ?>">
+                <i class="fas fa-money-check-alt"></i>
+                <span>Kategori Ongkir</span>
+            </a>
+            </li>
+
+            <li class="nav-item">
+            <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/costumer']) ?>">
+                <i class="fas fa-money-check-alt"></i>
+                <span>Pelanggan</span>
+            </a>
+            </li>
+
+            <li class="nav-item">
+            <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/karyawan']) ?>">
+                <i class="fas fa-money-check-alt"></i>
+                <span>Karyawan</span>
+            </a>
+            </li>
+
+            <li class="nav-item">
+            <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/owner']) ?>">
+                <i class="fas fa-money-check-alt"></i>
+                <span>Owner</span>
+            </a>
+            </li>
+
+            <li class="nav-item">
+            <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/user']) ?>">
+                <i class="fas fa-money-check-alt"></i>
+                <span>User</span>
+            </a>
+            </li>
+
+        <?php endif;?>
+        <!-- ADMIN END-->
+
+        <!-- OWNER BEGIN-->
+        <?php if(Yii::$app->user->identity->level == 'Owner') :?>
+
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo Yii::$app->homeUrl ?>">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/product/index']) ?>">
                 <i class="fas fa-fw fa-list"></i>
-                <span>Products</span>
+                <span>Produk</span>
             </a>
-        </li>
-
-        <!-- Nav Item - Charts -->
+            </li>
         <li class="nav-item">
             <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/order/index']) ?>">
                 <i class="fas fa-money-check-alt"></i>
-                <span>Orders</span>
+                <span>Daftar Pesanan</span>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/karyawan']) ?>">
+                <i class="fas fa-money-check-alt"></i>
+                <span>Karyawan</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/costumer']) ?>">
+                <i class="fas fa-money-check-alt"></i>
+                <span>Pelanggan</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/order/export-pdf']) ?>">
+                <i class="fas fa-money-check-alt"></i>
+                <span>Laporan Transaksi Bulanan</span>
+            </a>
+        </li>
+        <?php endif;?>
+        <!-- OWNER END-->
+
+        <!-- KARYAWAN BEGIN-->
+        <?php if(Yii::$app->user->identity->level == 'Karyawan') :?>
+
+            <li class="nav-item">
+            <a class="nav-link" href="<?php echo Yii::$app->homeUrl ?>">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+            </li>
+
+            <li class="nav-item">
+            <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/product/index']) ?>">
+                <i class="fas fa-fw fa-list"></i>
+                <span>Produk</span>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/order/index']) ?>">
+                <i class="fas fa-money-check-alt"></i>
+                <span>Daftar Pesanan</span>
+            </a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="<?php echo \yii\helpers\Url::to(['/order/export-pdf']) ?>">
+                <i class="fas fa-money-check-alt"></i>
+                <span>Laporan Data Transaksi</span>
+            </a>
+            </li>
+            
+        <?php endif;?>
+        <!-- KARYAWAN END-->
 
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
@@ -110,20 +231,16 @@ AppAsset::register($this);
                         </a>
                         <!-- Dropdown - User Information -->
                         <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">
+                        aria-labelledby="userDropdown">
+                            <!-- <a class="dropdown-item" href="#">
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Profile
-                            </a>
-                            <a class="dropdown-item" href="#">
-                                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Settings
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                            </a> -->
+                            <a class="dropdown-item" href="#logoutModal" data-toggle="modal" data-target="#logoutModal">
                                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Logout
                             </a>
+                            <!-- <div class="dropdown-divider"></div> -->
                         </div>
                     </li>
 
@@ -148,7 +265,7 @@ AppAsset::register($this);
                     </div>
 
                     <div class="col text-right">
-                        Created by <a href="https://youtube.com/TheCodeholic" target="_blank">TheCodeholic</a>
+                        Created by <a href="" target="_blank">NiaIrmaELtiana</a>
                     </div>
                 </div>
             </div>
@@ -172,12 +289,12 @@ AppAsset::register($this);
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Apakah Anda Yakin ?</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-body">Pilih tombol logout dibawah jika anda ingin keluar dari halaman ini</div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 <a data-method="post"

@@ -13,6 +13,8 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
+use backend\models\Ongkir;
+use yii\helpers\ArrayHelper;
 
 /**
  * Class ProfileController
@@ -43,9 +45,14 @@ class ProfileController extends \frontend\base\Controller
         /** @var \common\models\User $user */
         $user = Yii::$app->user->identity;
         $userAddress = $user->getAddress();
+
+        $pro = Ongkir::find()->All();
+        $pro = ArrayHelper::map($pro, 'id_ongkir', 'Provinsi');
+
         return $this->render('index', [
             'user' => $user,
-            'userAddress' => $userAddress
+            'userAddress' => $userAddress,
+            'pro' => $pro,
         ]);
     }
 
@@ -56,13 +63,17 @@ class ProfileController extends \frontend\base\Controller
         }
         $user = Yii::$app->user->identity;
         $userAddress = $user->getAddress();
+
+        $pro = Ongkir::find()->All();
+        $pro = ArrayHelper::map($pro, 'id_ongkir', 'Provinsi');
         $success = false;
         if ($userAddress->load(Yii::$app->request->post()) && $userAddress->save()) {
             $success = true;
         }
         return $this->renderAjax('user_address', [
             'userAddress' => $userAddress,
-            'success' => $success
+            'success' => $success,
+            'pro' => $pro,
         ]);
     }
 

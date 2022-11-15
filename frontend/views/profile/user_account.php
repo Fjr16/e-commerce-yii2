@@ -14,7 +14,7 @@ use yii\bootstrap4\ActiveForm;
 
 <?php if (isset($success) && $success): ?>
     <div class="alert alert-success">
-        Your account was successfully updated
+        Informasi akun berhasil diperbarui
     </div>
 <?php endif ?>
 <?php $form = ActiveForm::begin([
@@ -45,6 +45,6 @@ use yii\bootstrap4\ActiveForm;
     </div>
 </div>
 
-<button class="btn btn-primary">Update</button>
+<br><button class="btn btn-primary">Update</button>
 <?php ActiveForm::end(); ?>
 

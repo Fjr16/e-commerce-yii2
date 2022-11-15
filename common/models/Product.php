@@ -6,6 +6,8 @@ use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\helpers\FileHelper;
+use backend\models\KategoriProduk;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "{{%products}}".
@@ -32,6 +34,8 @@ class Product extends \yii\db\ActiveRecord
      * @var \yii\web\UploadedFile
      */
     public $imageFile;
+    public $habis = 'Sold Out';
+    // public $stok=5;
 
     /**
      * {@inheritdoc}
@@ -56,8 +60,9 @@ class Product extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'price', 'status'], 'required'],
+            [['id_kategori'], 'required'],
             [['description'], 'string'],
-            [['price'], 'number'],
+            [['price','stok'], 'number'],
             [['imageFile'], 'image', 'extensions' => 'png, jpg, jpeg, webp', 'maxSize' => 10 * 1024 * 1024],
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 255],
@@ -75,10 +80,12 @@ class Product extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'id_kategori' => 'Id Kategori',
             'description' => 'Description',
             'image' => 'Product Image',
             'imageFile' => 'Product Image',
             'price' => 'Price',
+            'stok' => 'Stok',
             'status' => 'Published',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -184,6 +191,13 @@ class Product extends \yii\db\ActiveRecord
     {
         return \yii\helpers\StringHelper::truncateWords(strip_tags($this->description), 30);
     }
+    public function getKategori(){
+        return $this->hasOne(KategoriProduk::className(), ['id' => 'id_kategori']);
+    }
+    // public function getnamaKategori(){
+    //     $kat = KategoriProduk::getAllKategori();
+    //     return \yii\helpers\StringHelper::truncateWords(strip_tags($kat->kategori), 2);
+    // }
 
     public function afterDelete()
     {

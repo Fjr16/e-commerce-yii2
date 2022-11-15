@@ -20,7 +20,7 @@ use yii\web\IdentityInterface;
  * @property string $email
  * @property string $auth_key
  * @property integer $status
- * @property integer $admin
+ * @property string $admin
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
@@ -30,7 +30,7 @@ use yii\web\IdentityInterface;
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
-    const STATUS_INACTIVE = 9;
+    // const STATUS_INACTIVE = 9;
     const STATUS_ACTIVE = 10;
 
     public const SCENARIO_UPDATE = 'update';
@@ -71,10 +71,10 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             [['firstname', 'lastname', 'username', 'email'], 'required'],
             [['firstname', 'lastname', 'username', 'email'], 'string', 'max' => 255],
-            ['status', 'default', 'value' => self::STATUS_INACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            ['status', 'default', 'value' => self::STATUS_ACTIVE],
+            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             ['password', 'string', 'min' => 8],
-            ['admin', 'default', 'value' => 0],
+            ['admin','default', 'value' => 1],
             ['password_repeat', 'compare', 'compareAttribute' => 'password'],
             ['username', 'unique', 'targetClass' => self::class, 'message' => 'This username has already been taken.'],
             ['email', 'unique', 'targetClass' => self::class, 'message' => 'This email address has already been taken.'],
@@ -132,12 +132,12 @@ class User extends ActiveRecord implements IdentityInterface
      * @param string $token verify email token
      * @return static|null
      */
-    public static function findByVerificationToken($token) {
-        return static::findOne([
-            'verification_token' => $token,
-            'status' => self::STATUS_INACTIVE
-        ]);
-    }
+    // public static function findByVerificationToken($token) {
+    //     return static::findOne([
+    //         'verification_token' => $token,
+    //         'status' => self::STATUS_INACTIVE
+    //     ]);
+    // }
 
     /**
      * Finds out if password reset token is valid
@@ -256,6 +256,9 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $address = $this->addresses[0] ?? new UserAddress();
         $address->user_id = $this->id;
+        // echo '<pre>';
+        // print_r($this->addresses);
+        // die();
         return $address;
     }
 

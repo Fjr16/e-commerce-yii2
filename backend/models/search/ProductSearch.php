@@ -11,6 +11,7 @@ use common\models\Product;
  */
 class ProductSearch extends Product
 {
+    public $kategori;
     /**
      * {@inheritdoc}
      */
@@ -18,8 +19,8 @@ class ProductSearch extends Product
     {
         return [
             [['id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
-            [['name', 'description', 'image'], 'safe'],
-            [['price'], 'number'],
+            [['name', 'description', 'image', 'kategori'], 'safe'],
+            [['price','stok'], 'number'],
         ];
     }
 
@@ -42,6 +43,7 @@ class ProductSearch extends Product
     public function search($params)
     {
         $query = Product::find();
+        $query->LeftJoin('kategori_produk', 'products.id_kategori = kategori_produk.id');
 
         // add conditions that should always apply here
 
@@ -63,6 +65,7 @@ class ProductSearch extends Product
         $query->andFilterWhere([
             'id' => $this->id,
             'price' => $this->price,
+            'stok' => $this->stok,
             'status' => $this->status,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
@@ -72,7 +75,8 @@ class ProductSearch extends Product
 
         $query->andFilterWhere(['like', 'name', $this->name])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'image', $this->image]);
+            ->andFilterWhere(['like', 'image', $this->image])
+            ->andFilterWhere(['like', 'kategori_produk.kategori', $this->kategori]);
 
         return $dataProvider;
     }

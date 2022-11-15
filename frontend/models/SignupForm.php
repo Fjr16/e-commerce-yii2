@@ -15,6 +15,7 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
+    public $level;
 
 
     /**
@@ -40,6 +41,8 @@ class SignupForm extends Model
 
             ['password', 'required'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
+
+            ['level', 'safe'],
         ];
     }
 
@@ -47,6 +50,7 @@ class SignupForm extends Model
      * Signs user up.
      *
      * @return bool whether the creating new account was successful and email was sent
+     * @return User|null the saved model or null if saving fails
      */
     public function signup()
     {
@@ -62,7 +66,9 @@ class SignupForm extends Model
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();
-        return $user->save() && $this->sendEmail($user);
+        $user->level = $this->level;
+
+        return $user->save() ? $user: null && $this->sendEmail($user);
 
     }
 

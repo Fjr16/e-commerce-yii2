@@ -10,6 +10,8 @@ use yii\bootstrap4\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use yii\helpers\Url;
+use backend\models\KategoriProduk;
 
 $cartItemCount = $this->params['cartItemCount'];
 
@@ -23,37 +25,50 @@ AppAsset::register($this);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <link rel="shortcut icon" type="image/x-icon" href="<?= Url::toRoute(['assets/logoatlanta.jpg']) ?>" />
+    <title>Atlanta Sport</title>
     <?php $this->head() ?>
 </head>
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
     <?php
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
-            'class' => 'navbar-expand-lg navbar-dark bg-dark fixed-top',
+            'class' => 'navbar navbar-expand-lg navbar-light bg-light',
         ],
     ]);
     $menuItems = [
         [
-            'label' => 'Cart <span id="cart-quantity" class="badge badge-danger">' . $cartItemCount . '</span>',
+            'label' => 'Keranjang <span id="cart-quantity" class="badge bg-dark text-white ms-1 rounded-pill">' . $cartItemCount . '</span>',
             'url' => ['/cart/index'],
             'encode' => false
         ],
     ];
+    
+    //belum selesai
+    // $kategori = KategoriProduk::find()->all();
+    // foreach($kategori as $tipe):
+    //     $tipe['kategori'];
+    // // $menuItems[] = [
+    // //     'label' => 'Kategori',
+    // //     'items' => [
+    // //         [
+    // //             'label' => $tipe['id'],
+    // //             'url' => ['/profile/index'],
+    // //         ],
+    // //     ]
+    // // ];
+    // endforeach;
+
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
+        $menuItems[] = ['label' => 'Daftar', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems[] = [
             'label' => Yii::$app->user->identity->getDisplayName(),
-//            'dropDownOptions' => [
-//                'class' => 'dropdown-menu-right'
-//            ],
             'items' => [
                 [
                     'label' => 'Profile',
@@ -70,31 +85,32 @@ AppAsset::register($this);
         ];
     }
     echo Nav::widget([
-        'options' => ['class' => 'navbar-nav ml-auto'],
+        'options' => ['class' => 'navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4'],
         'items' => $menuItems,
     ]);
     NavBar::end();
     ?>
 
-    <div class="container">
-        <?= Alert::widget() ?>
-        <?= $content ?>
-    </div>
-</div>
+        <header class="garis">
+        </header>
 
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
-            </div>
-
-            <div class="col text-right">
-                <p class="pull-right">Created by <a href="https://youtube.com/TheCodeholic" target="_blank">TheCodeholic</a></p>
+    <div id="content wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div class="p-4">
+                <?= Alert::widget() ?>
+                <?= $content ?>
             </div>
         </div>
+
+            <footer class="sticky-footer bg-dark">
+                <div class="container my-auto">
+                    <div class="row copyright">
+                    &copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?>
+                    </div>
+                </div>
+            </footer>
     </div>
-</footer>
+
 
 <?php $this->endBody() ?>
 </body>

@@ -15,7 +15,7 @@ use yii\bootstrap4\ActiveForm;
 
 <?php if (isset($success) && $success): ?>
     <div class="alert alert-success">
-        Your address was successfully updated
+        Data Alamat Anda Berhasil Diperbarui
     </div>
 <?php endif ?>
 
@@ -27,8 +27,8 @@ use yii\bootstrap4\ActiveForm;
 ]); ?>
 <?= $addressForm->field($userAddress, 'address') ?>
 <?= $addressForm->field($userAddress, 'city') ?>
-<?= $addressForm->field($userAddress, 'state') ?>
+<?= $addressForm->field($userAddress, 'provinsi')->dropDownList($pro)->label('State') ?>
 <?= $addressForm->field($userAddress, 'country') ?>
 <?= $addressForm->field($userAddress, 'zipcode') ?>
-<button class="btn btn-primary">Update</button>
+<br><button class="btn btn-primary">Update</button>
 <?php ActiveForm::end() ?>

@@ -1,9 +1,5 @@
 <?php
-/**
- * User: TheCodeholic
- * Date: 12/18/2020
- * Time: 10:48 AM
- */
+
 
 namespace common\i18n;
 
@@ -20,11 +16,11 @@ class Formatter extends \yii\i18n\Formatter
         if ($status == \common\models\Order::STATUS_COMPLETED) {
             return \yii\bootstrap4\Html::tag('span', 'Completed', ['class' => 'badge badge-success']);
         } else if ($status == \common\models\Order::STATUS_PAID) {
-            return \yii\bootstrap4\Html::tag('span', 'Paid', ['class' => 'badge badge-primary']);
+            return \yii\bootstrap4\Html::tag('span', 'Sudah Dibayar', ['class' => 'badge badge-primary']);
         } else if ($status == \common\models\Order::STATUS_DRAFT) {
-            return \yii\bootstrap4\Html::tag('span', 'Unpaid', ['class' => 'badge badge-secondary']);
+            return \yii\bootstrap4\Html::tag('span', 'Belum Dibayar', ['class' => 'badge badge-danger']);
         } else {
-            return \yii\bootstrap4\Html::tag('span', 'Failured', ['class' => 'badge badge-danger']);
+            return \yii\bootstrap4\Html::tag('span', 'Dikirim', ['class' => 'badge badge-secondary']);
         }
     }
 }

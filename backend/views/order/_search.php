@@ -25,16 +25,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'lastname') ?>
 
-    <?php // echo $form->field($model, 'email') ?>
-
-    <?php // echo $form->field($model, 'transaction_id') ?>
-
-    <?php // echo $form->field($model, 'paypal_order_id') ?>
-
-    <?php // echo $form->field($model, 'created_at') ?>
-
-    <?php // echo $form->field($model, 'created_by') ?>
-
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>

@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use backend\models\Ongkir;
 
 /**
  * This is the model class for table "{{%user_addresses}}".
@@ -33,9 +34,9 @@ class UserAddress extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'address', 'city', 'state', 'country'], 'required'],
-            [['user_id'], 'integer'],
-            [['address', 'city', 'state', 'country', 'zipcode'], 'string', 'max' => 255],
+            [['user_id', 'address', 'city', 'country'], 'required'],
+            [['user_id', 'provinsi'], 'integer'],
+            [['address', 'city', 'country', 'zipcode'], 'string', 'max' => 255],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -50,9 +51,9 @@ class UserAddress extends \yii\db\ActiveRecord
             'user_id' => 'User ID',
             'address' => 'Address',
             'city' => 'City',
-            'state' => 'State',
             'country' => 'Country',
             'zipcode' => 'Zipcode',
+            'provinsi' => 'Provinsi',
         ];
     }
 
@@ -64,6 +65,21 @@ class UserAddress extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function getProvinsi()
+    {
+        return $this->hasMany(Ongkir::class, ['id_ongkir' => 'provinsi']);
+    }
+
+    public function getProv(): ?Ongkir
+    {
+        $prov = $this->provinsi[0] ?? new Ongkir();
+        $prov->id_ongkir = $this->provinsi;
+        // echo '<pre>';
+        // print_r($this->provinsi);
+        // die();
+        return $prov;
     }
 
     /**

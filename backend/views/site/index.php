@@ -11,9 +11,14 @@
 /** @var array $countriesData */
 /** @var array $bgColors */
 
+use yii\helpers\Html;
+use yii\helpers\Url;
+
 $this->title = 'My Yii Application';
 ?>
+<?php if(Yii::$app->user->identity->level == 'Owner') :?>
     <div class="site-index">
+
         <!-- Content Row -->
         <div class="row">
             <!-- Earnings -->
@@ -23,10 +28,10 @@ $this->title = 'My Yii Application';
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                    Earnings
+                                    Omset
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    <?php echo Yii::$app->formatter->asCurrency($totalEarnings) ?>
+                                    <?php echo $totalEarnings ?>
                                 </div>
                             </div>
                             <div class="col-auto">
@@ -44,7 +49,7 @@ $this->title = 'My Yii Application';
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Products sold
+                                    Produk Terjual
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     <?php echo $totalProducts ?>
@@ -65,7 +70,7 @@ $this->title = 'My Yii Application';
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                    Orders made
+                                    Pesanan
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     <?php echo $totalOrders ?>
@@ -86,7 +91,7 @@ $this->title = 'My Yii Application';
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    Total Users
+                                    Jumlah User
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     <?php echo $totalUsers ?>
@@ -101,9 +106,7 @@ $this->title = 'My Yii Application';
             </div>
         </div>
 
-
         <!-- Content Row -->
-
         <div class="row">
 
             <!-- Area Chart -->
@@ -112,7 +115,7 @@ $this->title = 'My Yii Application';
                     <!-- Card Header - Dropdown -->
                     <div
                             class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Grafik Pendapatan</h6>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
@@ -129,7 +132,7 @@ $this->title = 'My Yii Application';
                     <!-- Card Header - Dropdown -->
                     <div
                             class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Sumber Pendapatan</h6>
                     </div>
                     <!-- Card Body -->
                     <div class="card-body">
@@ -147,7 +150,9 @@ $this->title = 'My Yii Application';
                 </div>
             </div>
         </div>
+
     </div>
+<?php endif;?>
 
 <?php $this->beginBlock('bodyEndScript') ?>
     <script>
@@ -188,7 +193,7 @@ $this->title = 'My Yii Application';
           data: {
             labels: <?php echo \yii\helpers\Json::encode($labels) ?>,
             datasets: [{
-              label: "Earnings",
+              label: "Pendapatan",
               lineTension: 0.3,
               backgroundColor: "rgba(78, 115, 223, 0.05)",
               borderColor: "rgba(78, 115, 223, 1)",
@@ -232,7 +237,7 @@ $this->title = 'My Yii Application';
                   padding: 10,
                   // Include a dollar sign in the ticks
                   callback: function (value, index, values) {
-                    return '$' + number_format(value);
+                    return number_format(value);
                   }
                 },
                 gridLines: {
@@ -264,7 +269,7 @@ $this->title = 'My Yii Application';
               callbacks: {
                 label: function (tooltipItem, chart) {
                   var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                  return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                  return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
                 }
               }
             }

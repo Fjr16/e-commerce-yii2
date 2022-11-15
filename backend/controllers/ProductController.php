@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use backend\models\KategoriProduk;
 
 /**
  * ProductController implements the CRUD actions for Product model.
@@ -62,11 +63,14 @@ class ProductController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
+
     public function actionView($id)
     {
+        $tipekategori = KategoriProduk::getAllKategori();
         return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
+        'model' => $this->findModel($id),
+        'tipekategori' => $tipekategori,
+    ]);
     }
 
     /**
@@ -77,6 +81,12 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $model = new Product();
+        $tipekategori = KategoriProduk::getAllKategori();
+
+        // echo '<pre>';
+        // print_r($model);
+        // die();
+
         $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -85,7 +95,10 @@ class ProductController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'tipekategori' => $tipekategori,
         ]);
+
+       
     }
 
     /**
@@ -98,6 +111,7 @@ class ProductController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $tipekategori = KategoriProduk::getAllKategori();
         $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -106,6 +120,7 @@ class ProductController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'tipekategori' => $tipekategori,
         ]);
     }
 

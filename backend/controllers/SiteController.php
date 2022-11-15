@@ -15,6 +15,8 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use backend\models\LoginForm;
+use common\models\SignupForm;
+use backend\models\Owner;
 
 /**
  * Site controller

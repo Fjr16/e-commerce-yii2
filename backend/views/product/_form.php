@@ -15,12 +15,14 @@ use yii\bootstrap4\ActiveForm;
             'options' => ['enctype' => 'multipart/form-data']
     ]); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true])->label('Nama') ?>
+
+    <?= $form->field($model, 'id_kategori')->dropDownList($tipekategori)->label('Kategori') ?>
 
     <?= $form->field($model, 'description')->widget(CKEditor::class, [
         'options' => ['rows' => 6],
         'preset' => 'basic'
-    ]) ?>
+    ])->label('Deskripsi') ?>
 
     <?= $form->field($model, 'imageFile', [
         'template' => '
@@ -38,12 +40,18 @@ use yii\bootstrap4\ActiveForm;
         'maxlength' => true,
         'type' => 'number',
         'step' => '0.01'
-    ]) ?>
+    ])->label('Harga') ?>
+
+    <?= $form->field($model, 'stok')->textInput([
+        'maxlength' => true,
+        'type' => 'number',
+    ])->label('Stok') ?>
 
     <?= $form->field($model, 'status')->checkbox() ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-primary']) ?>
+        <a href="./index" class="btn btn-default">Kembali</a>
     </div>
 
     <?php ActiveForm::end(); ?>
